@@ -1,6 +1,5 @@
 import React, { useState }  from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonButton } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
 import './Tab1.css';
 import { Link } from 'react-router-dom';
 //const [text, setText] = useState<string>();
