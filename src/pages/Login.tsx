@@ -1,22 +1,31 @@
 import React, { useState, useRef } from 'react';
-import { IonButton, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonTitle, IonToolbar, IonCard, IonCardContent, IonIcon, IonGrid, IonRow, IonCol } from '@ionic/react';
+import { IonButton, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonTitle, IonToolbar, IonCard, IonCardContent, IonIcon, IonGrid, IonRow, IonCol, IonAlert } from '@ionic/react';
 import './Tab2.css';
 import { logInOutline } from 'ionicons/icons';
 import { Link } from 'react-router-dom';
-
+import {loginUser} from '../firebase';
 const Login: React.FC = () => {
+  
   const [welcomeMsg,setwelcomeMsg]=useState('')
-  const [password,setPassword]=useState('')
+  const [alertmsg,setAlertmsg]=useState('')
   const userRef=useRef<HTMLIonInputElement>(null);
   const passRef=useRef<HTMLIonInputElement>(null);
-  const r=document.getElementById('result')
-  const loginUser = () => {
-    console.log(password);
-    const x='fuck u ';
+  const login = async () => {
+   
     const u=userRef.current?.value;
     const p=passRef.current?.value;
-    reset();
-    setwelcomeMsg('Successfully logged in');
+    var user=String(u);
+    var password=String(p);
+    if (u !="" && p!=""){
+    const result=await loginUser(user,password);
+    console.log(result);
+    if(result){
+      reset();
+      setAlertmsg('Successfully Registered! Thanks for ur valuable time');
+      
+    }
+  }
+   
   }
   const reset = () => {
     userRef.current!.value='';
@@ -29,6 +38,7 @@ const Login: React.FC = () => {
           <IonTitle >Login Page</IonTitle>
         </IonToolbar>
       </IonHeader>
+      <IonAlert isOpen={!!alertmsg} message={alertmsg}/>
       <IonContent fullscreen class="ion-padding">
         <IonHeader collapse="condense">
           <IonToolbar>
@@ -40,7 +50,7 @@ const Login: React.FC = () => {
         <IonItem>
           <IonCol><IonLabel position="fixed">Username</IonLabel></IonCol>
           <IonCol>
-          <IonInput ref={userRef} placeholder="Enter Username"></IonInput>
+          <IonInput type="email" ref={userRef} placeholder="Enter Username"></IonInput>
          </IonCol>
         </IonItem>
         </IonRow>
@@ -49,15 +59,13 @@ const Login: React.FC = () => {
             <IonCol>
         <IonLabel position="fixed">Password</IonLabel></IonCol>
         <IonCol>
-        <IonInput ref={passRef} type="password" placeholder="Enter Password" 
-        onIonChange={(e: any) => setPassword(e.target.value)}>
-        </IonInput>
+        <IonInput ref={passRef} type="password" placeholder="Enter Password"></IonInput>
         </IonCol>
         </IonItem>
         </IonRow>
         <IonRow>
         <div className="ion-text-center ion-margin">
-            <IonCol><IonButton onClick={loginUser} routerLink="/login" >
+            <IonCol><IonButton onClick={login} routerLink="/login" >
             <IonIcon slot="start" icon={logInOutline}/>
               Login</IonButton>
               </IonCol>
