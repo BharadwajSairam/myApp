@@ -47,7 +47,7 @@ const Register: React.FC = () => {
       <IonAlert isOpen={!!welcomeMsg} message={welcomeMsg}/>
       <IonContent fullscreen>
         <IonHeader collapse="condense">
-          <IonToolbar>
+          <IonToolbar color="primary">
             <IonTitle size="large">Register</IonTitle>
           </IonToolbar>
         </IonHeader>

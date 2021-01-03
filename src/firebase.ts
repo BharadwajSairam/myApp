@@ -28,7 +28,6 @@ export async function loginUser(email: string, password: string){
 
     }catch(error){
         return false
-
     }
 }
 
@@ -46,12 +45,24 @@ export async function registrationUser(email: string, password: string,name:stri
             Age: age,
             Gender: gender, 
             Address: address,
-            HealthCondition:health
+            HealthCondition:health,
+            Result:""
         });
-        console.log(res)
+        console.log(ref)
         return true;
     }catch(error){
         console.log(error)
         return false
     }
 }
+export async function signout() {
+    try{
+  const res=await firebase.auth().signOut();
+  return true;
+    }
+    catch{
+        return false;
+    }
+};
+
+export default firebase;

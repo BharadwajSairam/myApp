@@ -22,6 +22,7 @@ const Login: React.FC = () => {
     if(result){
       reset();
       setAlertmsg('Successfully Registered! Thanks for ur valuable time');
+      console.log(alertmsg);
       
     }
   }
@@ -38,7 +39,13 @@ const Login: React.FC = () => {
           <IonTitle >Login Page</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonAlert isOpen={!!alertmsg} message={alertmsg}/>
+      <IonAlert isOpen={!!alertmsg} message={alertmsg} buttons={[{
+              text: 'Ok',
+              handler: () => {
+                setAlertmsg("");
+                console.log(alertmsg)
+              }
+            }]}/>
       <IonContent fullscreen class="ion-padding">
         <IonHeader collapse="condense">
           <IonToolbar>
