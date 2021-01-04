@@ -1,10 +1,10 @@
 import React, { useRef, useState }  from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonButton, IonRadioGroup, IonLabel, IonListHeader, IonItem, IonRadio, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonAlert } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonButton, IonRadioGroup, IonLabel, IonListHeader, IonItem, IonRadio, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonAlert, IonSelect, IonSelectOption } from '@ionic/react';
 import './Tab1.css';
 import { registrationUser } from '../firebase'; 
 import { Link } from 'react-router-dom';
 //const [text, setText] = useState<string>();
-const Register: React.FC = () => {
+const Registe: React.FC = () => {
   const [username,setUsername]=useState('')
   const [password,setPassword]=useState('')
   const [cpassword,setcPassword]=useState('')
@@ -40,7 +40,7 @@ const Register: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
+        <IonToolbar color="primary">
           <IonTitle>Register</IonTitle>
         </IonToolbar>
       </IonHeader>
@@ -51,54 +51,51 @@ const Register: React.FC = () => {
             <IonTitle size="large">Register</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonInput type="email" value={username} placeholder="Enter Email address"
-         onIonChange={(e: any) => setUsername(e.target.value)}>Username
-         </IonInput>
+
+        <IonItem>
+          <IonLabel>Username</IonLabel>
+          <IonInput required={true} type="email" value={username} placeholder="Enter Email address" onIonChange={(e: any) => setUsername(e.target.value)}></IonInput>
+        </IonItem>
+       
+        <IonItem>
+          <IonLabel>Password</IonLabel>
+          <IonInput required={true} type="password" value={password} placeholder="Enter Password" onIonChange={(e: any) => setPassword(e.target.value)}></IonInput>
+        </IonItem>
+
+        <IonItem>
+          <IonLabel>Confirm Password : </IonLabel>
+          <IonInput required={true} type="password" onIonChange={e=>setcPassword(e.detail.value ?? '')} value={cpassword} placeholder="Confirm Password"></IonInput>
+        </IonItem>
         
-         <IonInput type="password"value={password} placeholder="Enter Password" 
-        onIonChange={(e: any) => setPassword(e.target.value)}>Password
-        </IonInput>
-
-        <IonInput type="password" value={cpassword} placeholder="Confirm Password">Confirm Password</IonInput>
-
-         <IonInput ref={nameref} placeholder="Enter FullName"
-         >FullName
-         </IonInput>
-
-         <IonInput ref={ageref} type="number" placeholder="Enter Age">Age
-         </IonInput>
-
-         Gender
-         <IonGrid>
-         <IonRadioGroup value={selected} onIonChange={e => setSelected(e.detail.value)}>
-            <IonRow>
-            <IonCol>
-            <IonItem>
-              <IonLabel>Male</IonLabel>
-              <IonRadio slot="start" value="Male" />
-            </IonItem>
-            </IonCol>
-            <IonCol>
-            <IonItem>
-              <IonLabel>Female</IonLabel>
-              <IonRadio slot="start" value="Female" />
-            </IonItem>
-            </IonCol>
-            <IonCol>
-            <IonItem>
-              <IonLabel>Other</IonLabel>
-              <IonRadio slot="start" value="Other" />
-            </IonItem>
-            </IonCol>
-            </IonRow>
-          </IonRadioGroup>
-          </IonGrid>
-          <br/>
-         <IonInput ref={addressref} placeholder="Enter Address">Address
-         </IonInput>
-
-         <IonInput ref={healthref} placeholder="Enter Health Condition">Health Condition
-         </IonInput>
+        <IonItem>
+          <IonLabel>FullName : </IonLabel>
+          <IonInput required={true} ref={nameref} placeholder="Enter FullName"></IonInput>
+        </IonItem>
+         
+        <IonItem>
+          <IonLabel>Age : </IonLabel>
+          <IonInput required={true} ref={ageref} type="number" placeholder="Enter Age"></IonInput>
+        </IonItem>
+        
+        <IonItem>
+          <IonLabel>Gender : </IonLabel>
+          <IonSelect aria-required={true} value={selected} placeholder="Select Gender" onIonChange={e => setSelected(e.detail.value)}>
+            <IonSelectOption value="female">Female</IonSelectOption>
+            <IonSelectOption value="male">Male</IonSelectOption>
+            <IonSelectOption value="other">Other</IonSelectOption>
+          </IonSelect>
+        </IonItem>
+         
+        <IonItem>
+          <IonLabel>Address : </IonLabel>
+          <IonInput required={true} ref={addressref} placeholder="Enter Address"></IonInput>
+        </IonItem>
+        
+        <IonItem>
+          <IonLabel>Health Condition : </IonLabel>
+          <IonInput clearInput={true} ref={healthref} placeholder="Enter Health Condition"></IonInput>
+        </IonItem>
+         
 
         <IonButton onClick={registerUser}>Register</IonButton>
         <p>
@@ -120,4 +117,4 @@ const Register: React.FC = () => {
   );
 };
 
-export default Register;
+export default Registe;

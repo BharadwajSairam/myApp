@@ -31,9 +31,24 @@ export async function loginUser(email: string, password: string){
     }
 }
 
+export async function vloginUser(email: string, password: string){
+
+    try{
+        if(email=="s@gmail.com"){
+            const  res = await firebase.auth().signInWithEmailAndPassword(email,password);
+            }
+        else{
+            return false;
+        }
+    return true
+
+    }catch(error){
+        return false
+    }
+}
+
 export async function registrationUser(email: string, password: string,name:string,age : number,gender:string,address:string,health:string){
     
-
     try{
         const  res = await firebase.auth().createUserWithEmailAndPassword(email,password)
         const db =firebase.firestore();
@@ -46,7 +61,9 @@ export async function registrationUser(email: string, password: string,name:stri
             Gender: gender, 
             Address: address,
             HealthCondition:health,
-            Result:""
+            Result:"",
+            VaccineGroup:"",
+            Dose:""
         });
         console.log(ref)
         return true;

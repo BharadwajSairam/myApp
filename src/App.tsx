@@ -11,8 +11,9 @@ import {
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { ellipse, square, triangle } from 'ionicons/icons';
-import Register from './pages/Register';
+import Registe from './pages/Register';
 import Login from './pages/Login';
+import VaccineMaker from './pages/VaccineMaker';
 import Dashboard from './pages/Dashboard';
 
 /* Core CSS required for Ionic components to work properly */
@@ -39,9 +40,10 @@ const App: React.FC = () => (
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
-          <Route path="/register" component={Register} exact={true} />
+          <Route path="/register" component={Registe} exact={true} />
           <Route path="/login" component={Login} exact={true} />
-          <Route path="/dashboard" component={Dashboard} />
+          <Route path="/dashboard" component={Dashboard} exact={true} />
+          <Route path="/vaccinemaker" component={VaccineMaker} />
           <Route path="/" render={() => <Redirect to="/register" />} exact={true} />
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
@@ -50,12 +52,16 @@ const App: React.FC = () => (
             <IonLabel>Register</IonLabel>
           </IonTabButton>
           <IonTabButton tab="login" href="/login">
-            <IonIcon icon={ellipse} />
+            <IonIcon icon={triangle} />
             <IonLabel>Login</IonLabel>
           </IonTabButton>
           <IonTabButton tab="dashboard" href="/dashboard">
-            <IonIcon icon={square} />
+            <IonIcon icon={triangle} />
             <IonLabel>Dashboard</IonLabel>
+          </IonTabButton>
+          <IonTabButton tab="vaccinemaker" href="/vaccinemaker">
+            <IonIcon icon={triangle} />
+            <IonLabel>VaccineMaker</IonLabel>
           </IonTabButton>
         </IonTabBar>
       </IonTabs>
