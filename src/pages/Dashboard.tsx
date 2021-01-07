@@ -4,7 +4,9 @@ import './Tab3.css';
 import firebase, { signout } from '../firebase';
 import QrReader from 'react-qr-scanner'
 const Dashboard: React.FC = () => {
-  const [delay, setdelay] = useState(100);
+  const delay = 100;
+  const [repalert,setReportalert]=useState('');
+  const [onsubmit,setsavesubmit]=useState('');
   const [result, setresult] = useState('');
   const [report, setreport] = useState('');
   const [scanqr, setscanqr] = useState(false);
@@ -12,8 +14,7 @@ const Dashboard: React.FC = () => {
   const [dose, setdose] = useState('');
   const [vacgroup, setvacgroup] = useState('');
 
-  //firebase.initializeApp(firebaseConfig);
-  var user = firebase.auth().currentUser;
+  const user = firebase.auth().currentUser;
 
   const handleScan = (data: any) => {
     
@@ -61,7 +62,10 @@ useEffect(()=>{
       try{
       const uid = firebase.auth().currentUser?.uid;
       console.log(uid + report);
-      firebase.firestore().collection('users').doc(uid).update({ Result: report });
+      if(uid != null){
+        firebase.firestore().collection('users').doc(uid).update({ Result: report });
+      }
+      
     }catch(error){
       console.log(error);
         }
@@ -74,8 +78,9 @@ useEffect(()=>{
     firebase.firestore().collection('users').doc(uid).get().then((doc)=>{
       const items=doc.data();
       if(items){
-        if(items.VaccineGroup == ""){
+        if(items.VaccineGroup === ""){
           setresult("");
+          setReportalert("Please scanQR before making a report");
         }
         else{
           const x="{ \"vaccine\": \""+ items.VaccineGroup + "\" , " + " \"dose\": \"" + items.Dose + "\"}";
@@ -96,9 +101,12 @@ useEffect(()=>{
   const manualsubmit=async()=>{
     try{
     const uid = firebase.auth().currentUser?.uid;
-    
       firebase.firestore().collection('users').doc(uid).update({ VaccineGroup: vacgroup });
       firebase.firestore().collection('users').doc(uid).update({ Dose: dose });
+      setmanual(false);
+      setvacgroup('');
+      setdose('');
+      setsavesubmit("QR Details saved successfully");
     }catch(error){
       console.log(error);
     }
@@ -117,6 +125,19 @@ useEffect(()=>{
         </IonToolbar>
       </IonHeader>
       <IonAlert isOpen={!!report} message="Thanks for reporting please Logout" buttons={['Ok']} />
+      <IonAlert isOpen={!!repalert} message={repalert} buttons={[{
+              text: 'Ok',
+              handler: () => {
+                setReportalert("");
+              }
+            }]} />
+      <IonAlert isOpen={!!onsubmit} message={onsubmit} buttons={[{
+              text: 'Ok',
+              handler: () => {
+                setsavesubmit("");
+              }
+            }]} />
+
       {user &&
         <IonContent>
           <IonGrid>
@@ -205,7 +226,7 @@ useEffect(()=>{
         <IonContent>
           <IonCard>
             <IonCardContent>
-              <h2>Please login to view Dashboard</h2>
+              <h1><a href="/login">Please login to view Dashboard</a></h1>
             </IonCardContent>
           </IonCard>
         </IonContent>

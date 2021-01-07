@@ -1,5 +1,5 @@
 import React, { useRef, useState }  from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonButton, IonRadioGroup, IonLabel, IonListHeader, IonItem, IonRadio, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonAlert, IonSelect, IonSelectOption } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonButton, IonLabel, IonItem,  IonRow, IonCol, IonCard, IonCardContent, IonAlert, IonSelect, IonSelectOption } from '@ionic/react';
 import './Tab1.css';
 import { registrationUser } from '../firebase'; 
 import { Link } from 'react-router-dom';
@@ -10,7 +10,6 @@ const Registe: React.FC = () => {
   const [cpassword,setcPassword]=useState('')
   const [selected, setSelected] = useState<string>('');
   const ageref=useRef<HTMLIonInputElement>(null);
-  const genderref=useRef<HTMLIonInputElement>(null);
   const addressref=useRef<HTMLIonInputElement>(null);
   const nameref=useRef<HTMLIonInputElement>(null);
   const healthref=useRef<HTMLIonInputElement>(null);
@@ -44,7 +43,12 @@ const Registe: React.FC = () => {
           <IonTitle>Register</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonAlert isOpen={!!welcomeMsg} message={welcomeMsg}/>
+      <IonAlert isOpen={!!welcomeMsg} message={welcomeMsg} buttons={[{
+              text: 'Ok',
+              handler: () => {
+                setwelcomeMsg("");
+              }
+            }]}/>
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar color="primary">

@@ -21,7 +21,7 @@ const Login: React.FC = () => {
     console.log(result);
     if(result){
       reset();
-      setAlertmsg('Successfully Registered! Thanks for ur valuable time');
+      setAlertmsg('Successfully Registered! Please Proceed to Dashboard');
       console.log(alertmsg);
       
     }
